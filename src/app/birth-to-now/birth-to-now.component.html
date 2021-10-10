@@ -1,0 +1,22 @@
+<div class="container">
+
+  <div class="picker">
+    <mat-form-field appearance="fill">
+      <mat-label>选择出生日期</mat-label>
+      <input matInput [matDatepicker]="picker" [value]="initBirthDay.value" (dateChange)="onBirthdayChange('change', $event)" disabled>
+      <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker disabled="false"></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="process">
+    <div>目标 {{targetLivingYears}} 岁</div>
+    <div>人生进度 {{livingPercent}}%</div>
+    <mat-progress-bar mode="determinate" value="{{livingPercent}}"></mat-progress-bar>
+    <div>你已存在 {{humanableDays}}</div>
+  </div>
+
+
+</div>

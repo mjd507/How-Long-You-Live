@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  .picker {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .process {
+    flex: 2;
+  }
+}
