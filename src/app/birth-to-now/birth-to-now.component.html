@@ -1,22 +1,64 @@
-<div class="container">
+<div class="wrapper">
 
-  <div class="picker">
-    <mat-form-field appearance="fill">
-      <mat-label>选择出生日期</mat-label>
-      <input matInput [matDatepicker]="picker" [value]="initBirthDay.value" (dateChange)="onBirthdayChange('change', $event)" disabled>
-      <mat-datepicker-toggle matSuffix [for]="picker">
-        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-      </mat-datepicker-toggle>
-      <mat-datepicker #picker disabled="false"></mat-datepicker>
-    </mat-form-field>
+  <div class="birth">
+    <div class="picker">
+      <mat-icon aria-hidden="false" aria-label="face">face</mat-icon>
+      <mat-label>出生日期</mat-label>
+      <div class="right">
+        <input matInput [matDatepicker]="picker" [value]="initBirthDay.value"
+          (dateChange)="onBirthdayChange('change', $event)" disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false"></mat-datepicker>
+      </div>
+    </div>
+    <div class="tip-text">你已存在 {{humanableDays}}</div>
   </div>
 
-  <div class="process">
-    <div>目标 {{targetLivingYears}} 岁</div>
-    <div>人生进度 {{livingPercent}}%</div>
-    <mat-progress-bar mode="determinate" value="{{livingPercent}}"></mat-progress-bar>
-    <div>你已存在 {{humanableDays}}</div>
+  <div class="retire">
+    <div class="tip">
+      <mat-icon aria-hidden="false" aria-label="elderly">elderly</mat-icon>
+      <mat-label>退休年龄</mat-label>
+      <div class="right">
+        <div class="tip-text">男性：{{menRetireAge}} 岁，女性：{{womenRetireAge}} 岁</div>
+      </div>
+    </div>
+    <div class="progress">
+      <div class="item">
+        <div class="tip-text">男性距退休已过 {{menRetirePercent}}%</div>
+        <mat-progress-spinner color="primary" mode="determinate" value="{{menRetirePercent}}"></mat-progress-spinner>
+      </div>
+      <div class="item">
+        <div class="tip-text">女性距退休已过 {{womenRetirePercent}}%</div>
+        <mat-progress-spinner color="primary" mode="determinate" value="{{womenRetirePercent}}"></mat-progress-spinner>
+      </div>
+    </div>
+
   </div>
 
+  <div class="death">
+    <div class="age">
+      <mat-icon aria-hidden="false" aria-label="close">close</mat-icon>
+      <mat-label>死亡年龄</mat-label>
+      <div class="right">
+        <input matInput type="number" placeholder="" value="{{targetLivingYears}}" (change)="onDeathAgeChange($event)">
+        岁
+      </div>
+    </div>
 
+    <div class="left-progress">
+      <div>人生进度 {{livingPercent}}%</div>
+      <mat-progress-bar color="warn" mode="determinate" value="{{livingPercent}}"></mat-progress-bar>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <button mat-fab color="primary" disabled>
+      <mat-icon>keyboard_double_arrow_left</mat-icon>
+    </button>
+    <button mat-fab color="basic">
+      <mat-icon>keyboard_double_arrow_right</mat-icon>
+    </button>
+  </div>
 </div>

@@ -14,9 +14,15 @@ export class BirthToNowComponent implements OnInit {
   initBirthDay: FormControl = new FormControl(new Date());
 
   livingDays: number = 0;
-  targetLivingYears: number = 80;
-  livingPercent: string = (this.livingDays / 365 / this.targetLivingYears * 100).toFixed(2);
-  humanableDays: string = "";
+
+  menRetireAge : number = 60; // 男性退休年龄
+  womenRetireAge : number = 55; // 女性退休年龄
+  menRetirePercent: string = "0"; // 男性距离退休的进度
+  womenRetirePercent: string = "0"; // 女性距离退休的进度
+
+  targetLivingYears: number = 80;  // 目标生活时间
+  livingPercent: string = (this.livingDays / 365 / this.targetLivingYears * 100).toFixed(2);  // 距离死亡的进度
+  humanableDays: string = "0 天";  // livingDays 生活时间，人类可阅读的格式
 
   constructor() {
   }
@@ -46,12 +52,25 @@ export class BirthToNowComponent implements OnInit {
   calculate(timeInMilles: number) {
     const diffDays = DateUtils.diffDays(timeInMilles, DateUtils.now());
     this.livingDays = diffDays;
-    this.livingPercent = (this.livingDays / 365 / this.targetLivingYears * 100).toFixed(2);
-
+    // 1. 已存在 xx 年 xx 月 xx 天
     const years = Math.floor(diffDays / 365);
     const months = Math.floor((diffDays - years * 365) / 31);
     const days = diffDays - years * 365 - months * 31;
-    this.humanableDays = `${years} 年 ${months} 月 ${days} 日`;
+    this.humanableDays = `${years} 年 ${months} 月 ${days} 天`;
+    // 2. 计算距离退休的进度
+    this.menRetirePercent = (this.livingDays / 365 / this.menRetireAge * 100).toFixed(2);
+    this.womenRetirePercent = (this.livingDays / 365 / this.womenRetireAge * 100).toFixed(2);
+    // 3. 计算距离死亡的进度
+    this.calcDeathProgress();
+  }
+
+  calcDeathProgress() {
+    this.livingPercent = (this.livingDays / 365 / this.targetLivingYears * 100).toFixed(2);
+  }
+
+  onDeathAgeChange(event: any) {
+    this.targetLivingYears = event.target.value;
+    this.calcDeathProgress();
   }
 
 }
